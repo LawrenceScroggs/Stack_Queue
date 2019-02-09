@@ -7,11 +7,12 @@
 
 using namespace std;
 
-
+int const MAX = 5;
 
 
 struct email{
 
+  
   char * user;
   char * topic;
   char * body;
@@ -19,23 +20,37 @@ struct email{
 
 
 };
+class stackNode{
+
+  public:
+  stackNode();
+  email * entries;
+  stackNode * next;
+
+  private:
+
+
+};
 class stack{
 
   public:
     stack();
-    getInfo();
-    peek();
-    display();
+    int pushInfo(email & userData);
+    int peek();
+    int display(stackNode head);
+    int deletePop();
 
+    ~stack();
     
 
   private:
-    peek_aboo();
-    display_private();
-    push(email * & head);
-    pop(email * & head);
-    
+    int peek_aboo();
+    int display_private();
+    int push(stackNode * & head, email & userData);
+    int pop(stackNode * & head, email * & entries);
 
+    stackNode * head;
+    int counter = 0;
 
 };
 class queue{

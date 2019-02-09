@@ -12,12 +12,34 @@
 int main(){
 
 
+  stack list;
+  email temp;
+
+  int stackCheck = 0;
+
+  char addEmail = ' ';
+
+  while(addEmail == 'Y')
+  {
+    cout << "Please enter email account (e.g. person@gmail.com): ";
+    temp.user = new char[100];
+    cin.get(temp.user, 100);
+    cin.ignore(100,'\n');
+    stackCheck = list.pushInfo(temp);
+
+    cout << "Would you like to add another email? (y/n): ";
+    cin >> addEmail;
+    addEmail = toupper(addEmail);
+  }
+
+  
 
 
 
 
 
 
+  delete [] temp.user;
 
 return 0;
 
