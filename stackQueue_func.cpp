@@ -13,7 +13,9 @@ stackNode::stackNode(){
 
   entries = new email[MAX];
   for(int i = 0; i < MAX; ++i)
+  {
     entries[i].user = NULL;
+  }
 
   
   next = NULL;
@@ -26,29 +28,31 @@ int stack::display(){
 
   int dispCheck = 0;
 
-  dispCheck = display_private(head,userData);
+  dispCheck = display_private(head);
 
   if(dispCheck == -1)
-    cout << "No Emails Available" << endl;
+    cout << "No More Emails Available" << endl;
 
   else return 1;
 
 }
 // display function to show the full list of emails
-int stack::display_private(stackNode * head, email * userData){
+int stack::display_private(stackNode * head){
 
+  cout << "counter: " << counter << "test: " << head->entries[counter-1].user << endl;
   if(!head) return -1;
   if(counter == 0)
   {
-    cout << "Email Username: " << entries[counter].user << endl;
+    cout << "Email Username: " << head->entries[counter].user << endl;
     counter = 5;
     display_private(head->next);
+    cout << endl << endl;
 
   }
 
   if(counter != 0)
   {
-    cout << "Email Username: " << entries[counter].user << endl;
+    cout << "Email Username: " << head->entries[counter-1].user << endl;
     --counter;
     display_private(head);
 
@@ -68,38 +72,40 @@ int stack::pushInfo(email & userData){
 }
 int stack::push(stackNode * & head, email & userData){
 
-
+  cout << counter << endl;
   if(!head)
   { 
     head = new stackNode;
+    //head->entries = new email[MAX];
+    cout << MAX << " & " << counter << endl;
     head->entries[counter].user = new char[strlen(userData.user)+1];
     strcpy(head->entries[counter].user, userData.user);
+    cout << "test " << head->entries[counter].user << endl;
     ++counter;
     head->next = NULL;
   }
-  if(head && counter < MAX)
+  else if(counter <  MAX-1)
   {
-    head->entries[counter].user = new char[strlen(userData.user)+1];
-    ++counter;
-
-  }
-  if(counter == MAX)
-  {
-    counter = 0;
-    stackNode * temp = new stackNode;
-    temp = head;
-    head = head->next;
-
+    cout << " in the middle " << endl;
     head->entries[counter].user = new char[strlen(userData.user)+1];
     strcpy(head->entries[counter].user, userData.user);
     ++counter;
 
   }
+  else if(counter == MAX-1)
+  {
+    cout << " at end of array " << endl;
+    stackNode * temp;
+    temp = head;
+    head = new stackNode;
+    temp = head->next;
+    head->next = temp;
 
+    head->entries[counter].user = new char[strlen(userData.user)+1];
+    strcpy(head->entries[counter].user, userData.user);
+    counter = 0;
 
-    
-
-
+  }
 }
 // destructor for stack
 stack::~stack(){

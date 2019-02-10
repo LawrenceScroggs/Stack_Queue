@@ -14,10 +14,12 @@ int main(){
 
   stack list;
   email temp;
+  stackNode create;
 
   int stackCheck = 0;
 
   char addEmail = ' ';
+  char yesNo = ' ';
 
   while(addEmail != 'N')
   {
@@ -29,8 +31,17 @@ int main(){
 
     cout << "Would you like to add another email? (y/n): ";
     cin >> addEmail;
+    cin.ignore(100,'\n');
     addEmail = toupper(addEmail);
   }
+
+  cout << "Would you like to display your email list? (y/n): ";
+  cin >> yesNo;
+  cin.ignore(100,'\n');
+  yesNo = toupper(yesNo);
+
+  if(yesNo == 'Y')
+    list.display();
 
   
 
