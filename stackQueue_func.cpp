@@ -21,6 +21,40 @@ stackNode::stackNode(){
 
 
 }
+// wrapper function for display_private
+int stack::display(){
+
+  int dispCheck = 0;
+
+  dispCheck = display_private(head,userData);
+
+  if(dispCheck == -1)
+    cout << "No Emails Available" << endl;
+
+  else return 1;
+
+}
+// display function to show the full list of emails
+int stack::display_private(stackNode * head, email * userData){
+
+  if(!head) return -1;
+  if(counter == 0)
+  {
+    cout << "Email Username: " << entries[counter].user << endl;
+    counter = 5;
+    display_private(head->next);
+
+  }
+
+  if(counter != 0)
+  {
+    cout << "Email Username: " << entries[counter].user << endl;
+    --counter;
+    display_private(head);
+
+  }
+
+}
 // this function will get the email info and pass to array
 int stack::pushInfo(email & userData){
 

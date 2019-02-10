@@ -37,7 +37,7 @@ class stack{
     stack();
     int pushInfo(email & userData);
     int peek();
-    int display(stackNode head);
+    int display();
     int deletePop();
 
     ~stack();
@@ -45,7 +45,7 @@ class stack{
 
   private:
     int peek_aboo();
-    int display_private();
+    int display_private(stackNode * head, email * userData);
     int push(stackNode * & head, email & userData);
     int pop(stackNode * & head, email * & entries);
 

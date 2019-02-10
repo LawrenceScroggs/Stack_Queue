@@ -19,7 +19,7 @@ int main(){
 
   char addEmail = ' ';
 
-  while(addEmail == 'Y')
+  while(addEmail != 'N')
   {
     cout << "Please enter email account (e.g. person@gmail.com): ";
     temp.user = new char[100];
