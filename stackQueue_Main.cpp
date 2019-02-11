@@ -15,8 +15,10 @@ int main(){
   stack list;
   email temp;
   stackNode create;
+  queueList full_list;
 
   int stackCheck = 0;
+  int popCheck = 0;
 
   char addEmail = ' ';
   char yesNo = ' ';
@@ -47,13 +49,59 @@ int main(){
 
   cout << "You want to peek at the top. (y/n): ";
   cin >> yesNo;
+  cin.ignore(100,'\n');
   yesNo = toupper(yesNo);
 
   if(yesNo == 'Y')
     temp.user = list.peek();
 
-  cout << "test " << temp.user << endl;
+  yesNo = ' ';
 
+  while(yesNo != 'N')
+  {
+    cout << "Would you like to pop/delete the top of stack? (y/n): ";
+    cin >> yesNo;
+    cin.ignore(100,'\n');
+    yesNo = toupper(yesNo);
+    if(yesNo == 'Y')
+    {
+      popCheck = list.deletePop();
+      if(popCheck == 1)
+        cout << "Deleted Succesfully" << endl;
+      else
+        cout << "ERROR";
+    }
+  }
+
+  list.display();
+
+  yesNo = ' ';
+
+  cout << "Now it is time to go through your list and decide which emails to keep. " << endl;
+  temp2 = new char[500];
+  while(temp != NULL)
+  {
+    temp = list.peek();
+    cout << temp << endl;
+    cout << "Would you like to keep this email? (y/n): ";
+    cin >> yesNo;
+    yesNo = toupper(yesNo);
+    if(yesNo == 'Y')
+    {
+      full_list.enqueue(temp);
+      list.deletePop();
+    }
+    else
+      list.deletePop();
+
+  }
+
+    
+
+      
+
+
+  
 
 
 

@@ -1,12 +1,15 @@
 // This will implement all the functions of my class
 
 # include "sQ.h"
+queueList::queueList(){
 
+  qHead = NULL;
+
+}
 stack::stack(){
 
 
   head = NULL;  
-  begin = NULL;
 
 
 }
@@ -21,6 +24,50 @@ stackNode::stackNode(){
   
   next = NULL;
 
+
+
+}
+// wrapper for pop function
+int stack::deletePop(){
+
+  int temp = 0;
+
+  temp = pop(head);
+
+  if(temp == 1)
+    return 1;
+
+  else return -1;
+
+}
+int stack::pop(stackNode *& head){
+
+
+  if(!head)
+  {
+    cout << "List Empty" << endl;
+    return -1;
+  }
+  else if(top == 0)
+  {
+    stackNode * hold = head->next;
+    head->next->entries[top + 4].user = NULL;
+    delete [] head;
+    head = hold;
+    if(head)
+    {
+      top = MAX-1;
+      counter = MAX;
+    }
+    return 1;
+  }
+  else if(top < MAX)
+  {
+    head->entries[top-1].user = NULL;
+    --top;
+    counter = top;
+    return 1;
+  }
 
 
 }
@@ -138,7 +185,6 @@ int stack::push(stackNode * & head, email & userData){
     strcpy(head->entries[counter].user, userData.user);
     cout << "test " << head->entries[counter].user << endl;
     ++counter;
-    begin = head;
 
   }
   else if(counter == MAX-1)

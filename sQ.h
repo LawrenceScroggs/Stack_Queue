@@ -18,7 +18,7 @@ struct email{
   char * body;
   char * date;
 
-  qNode * next;
+  email * next;
 
 
 };
@@ -50,18 +50,24 @@ class stack{
     char* peek_aboo(stackNode * head); // peeks and returns top of stack
     int display_private(stackNode * head); // displays list of arrays of emails
     int push(stackNode * & head, email & userData); // puts email into array 
-    int pop(stackNode * & head, email * & entries); // deletes top of stack
+    int pop(stackNode * & head); // deletes top of stack
 
     stackNode * head;
+   
     int counter = 0;
     int top = counter;
 
 };
-class queue{
+class queueList{
 
   public:
+    queueList();
+    ~queueList();
+    int enqueue(email & userData);
 
   private:
+    int buildQ(email *& qHead, email & userData);
+    email * qHead;
 
 
 };
