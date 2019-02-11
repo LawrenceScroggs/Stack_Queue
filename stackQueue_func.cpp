@@ -6,6 +6,7 @@ stack::stack(){
 
 
   head = NULL;  
+  begin = NULL;
 
 
 }
@@ -23,14 +24,48 @@ stackNode::stackNode(){
 
 
 }
+// wrapper function for peek
+char* stack::peek(){
+
+  char * temp = new char[100];
+
+  temp = peek_aboo(head);
+
+  cout << "temp " << temp << endl;
+
+  if(temp != NULL)
+    return temp;
+
+  else
+    return NULL;
+  
+}
+// finds the top of stack displays for client
+char* stack::peek_aboo(stackNode * headPeek){
+
+  if(!head)
+  {
+    cout << "List is empty. " << endl;
+    return NULL;
+  }
+  if(top == 0)
+  {
+    return headPeek->next->entries[top + 4].user;
+  }
+  else if(top < MAX)
+  {
+    return head->entries[top-1].user;
+
+  }
+
+
+}
 // wrapper function for display_private
 int stack::display(){
 
   int dispCheck = 0;
 
   dispCheck = display_private(head);
-
-  cout << "disp " << dispCheck << endl;
 
   if(dispCheck == -1)
     cout << "No More Emails Available" << endl;
@@ -47,8 +82,6 @@ int stack::display_private(stackNode * head){
 
   else if(counter-1 == -1)
   {
-    //cout << "moving heads" << endl;
-   // cout << "Email Username: " << head->entries[counter-1].user << endl;
     counter = 5;
     if(!head->next)
     {
@@ -57,7 +90,6 @@ int stack::display_private(stackNode * head){
     }
     else
     display_private(head->next);
-    cout << endl;
 
   }
 
@@ -67,7 +99,6 @@ int stack::display_private(stackNode * head){
     cout << "Email Username: " << head->entries[counter-1].user << endl;
     --counter;
     display_private(head);
-    cout << endl;
 
   }
   
@@ -107,6 +138,7 @@ int stack::push(stackNode * & head, email & userData){
     strcpy(head->entries[counter].user, userData.user);
     cout << "test " << head->entries[counter].user << endl;
     ++counter;
+    begin = head;
 
   }
   else if(counter == MAX-1)
@@ -127,6 +159,8 @@ int stack::push(stackNode * & head, email & userData){
     counter = 0;
 
   }
+  top = counter;
+  return 0;
 }
 // destructor for stack
 stack::~stack(){

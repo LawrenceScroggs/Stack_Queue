@@ -43,8 +43,16 @@ int main(){
   if(yesNo == 'Y')
     list.display();
 
-  
+  yesNo = ' ';
 
+  cout << "You want to peek at the top. (y/n): ";
+  cin >> yesNo;
+  yesNo = toupper(yesNo);
+
+  if(yesNo == 'Y')
+    temp.user = list.peek();
+
+  cout << "test " << temp.user << endl;
 
 
 
