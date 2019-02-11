@@ -14,6 +14,7 @@ int main(){
 
   stack list;
   email temp;
+  email temp2;
   stackNode create;
   queueList full_list;
 
@@ -23,12 +24,30 @@ int main(){
   char addEmail = ' ';
   char yesNo = ' ';
 
+  bool emptyCheck = false;
+
   while(addEmail != 'N')
   {
     cout << "Please enter email account (e.g. person@gmail.com): ";
     temp.user = new char[100];
     cin.get(temp.user, 100);
     cin.ignore(100,'\n');
+
+    cout << "Please enter the topic: ";
+    temp.topic = new char[100];
+    cin.get(temp.topic, 100);
+    cin.ignore(100,'\n');
+
+    cout << "Please enter the body of email: ";
+    temp.body = new char[500];
+    cin.get(temp.body, 500);
+    cin.ignore(500, '\n');
+
+    cout << "Please enter date of email: ";
+    temp.date = new char[100];
+    cin.get(temp.date, 100);
+    cin.ignore(100,'\n');
+
     stackCheck = list.pushInfo(temp);
 
     cout << "Would you like to add another email? (y/n): ";
@@ -53,7 +72,7 @@ int main(){
   yesNo = toupper(yesNo);
 
   if(yesNo == 'Y')
-    temp.user = list.peek();
+    temp = list.peek();
 
   yesNo = ' ';
 
@@ -69,7 +88,7 @@ int main(){
       if(popCheck == 1)
         cout << "Deleted Succesfully" << endl;
       else
-        cout << "ERROR";
+        cout << "List is Empty" << endl << endl;
     }
   }
 
@@ -78,11 +97,14 @@ int main(){
   yesNo = ' ';
 
   cout << "Now it is time to go through your list and decide which emails to keep. " << endl;
-  temp2 = new char[500];
-  while(temp != NULL)
+  while(emptyCheck != true)
   {
+    if(list.display() == -1)
+    {
+      cout << "No Emails in List. " << endl;
+      emptyCheck = true;
+    }
     temp = list.peek();
-    cout << temp << endl;
     cout << "Would you like to keep this email? (y/n): ";
     cin >> yesNo;
     yesNo = toupper(yesNo);
@@ -93,6 +115,8 @@ int main(){
     }
     else
       list.deletePop();
+
+    emptyCheck = list.empty();
 
   }
 

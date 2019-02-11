@@ -19,6 +19,9 @@ stackNode::stackNode(){
   for(int i = 0; i < MAX; ++i)
   {
     entries[i].user = NULL;
+    entries[i].topic = NULL;
+    entries[i].body = NULL;
+    entries[i].date = NULL;
   }
 
   
@@ -26,6 +29,37 @@ stackNode::stackNode(){
 
 
 
+}
+// wrapper for buildQ
+int queueList::enqueue(email & userData){
+
+  //buildQ(qHead,userData);
+
+  return 0;
+
+}
+// wrapper for is_empty
+bool stack::empty(){
+
+  bool temp = false;
+
+  temp = is_empty(head);
+
+  if(temp == true)
+    return true;
+
+  else
+    return false;
+
+}
+// checks if list is empty
+bool stack::is_empty(stackNode * head){
+
+  if(!head)
+    return true;
+
+  else
+    return false;
 }
 // wrapper for pop function
 int stack::deletePop(){
@@ -40,18 +74,26 @@ int stack::deletePop(){
   else return -1;
 
 }
+// deletes top of stack
 int stack::pop(stackNode *& head){
 
 
   if(!head)
   {
-    cout << "List Empty" << endl;
     return -1;
   }
   else if(top == 0)
   {
+    if(!head->next)
+    {
+      head = NULL;
+      return -1;
+    }
     stackNode * hold = head->next;
     head->next->entries[top + 4].user = NULL;
+    head->next->entries[top + 4].body = NULL;
+    head->next->entries[top + 4].topic = NULL;
+    head->next->entries[top + 4].date = NULL;
     delete [] head;
     head = hold;
     if(head)
@@ -64,6 +106,9 @@ int stack::pop(stackNode *& head){
   else if(top < MAX)
   {
     head->entries[top-1].user = NULL;
+    head->entries[top-1].topic = NULL;
+    head->entries[top-1].body = NULL;
+    head->entries[top-1].date = NULL;
     --top;
     counter = top;
     return 1;
@@ -72,36 +117,45 @@ int stack::pop(stackNode *& head){
 
 }
 // wrapper function for peek
-char* stack::peek(){
+email stack::peek(){
 
-  char * temp = new char[100];
+
+  email temp;
 
   temp = peek_aboo(head);
 
-  cout << "temp " << temp << endl;
+  return temp;
 
-  if(temp != NULL)
-    return temp;
 
-  else
-    return NULL;
+
   
 }
 // finds the top of stack displays for client
-char* stack::peek_aboo(stackNode * headPeek){
+email stack::peek_aboo(stackNode * headPeek){
+
 
   if(!head)
   {
     cout << "List is empty. " << endl;
-    return NULL;
+    
   }
   if(top == 0)
   {
-    return headPeek->next->entries[top + 4].user;
+    cout << "Email Username: " << head->next->entries[top+4].user << endl;
+    cout << "Topic: " << head->next->entries[top+4].topic << endl;
+    cout << "Body: " << head->next->entries[top+4].body << endl;
+    cout << "Date: " << head->next->entries[top+4].date << endl;
+
+    return head->next->entries[top+4];
   }
   else if(top < MAX)
   {
-    return head->entries[top-1].user;
+    cout << "Email Username: " << head->entries[top-1].user << endl;
+    cout << "Topic: " << head->entries[top-1].topic << endl;
+    cout << "Body: " << head->entries[top-1].body << endl;
+    cout << "Date: " << head->entries[top-1].date << endl;
+
+    return head->entries[top-1];
 
   }
 
@@ -115,7 +169,10 @@ int stack::display(){
   dispCheck = display_private(head);
 
   if(dispCheck == -1)
-    cout << "No More Emails Available" << endl;
+  {
+    cout << "Emails Empty" << endl;
+    return -1;
+  }
 
   else return 1;
 
@@ -144,6 +201,9 @@ int stack::display_private(stackNode * head){
   {
     cout << counter << endl;
     cout << "Email Username: " << head->entries[counter-1].user << endl;
+    cout << "Topic: " << head->entries[counter-1].topic << endl;
+    cout << "Body: " << head->entries[counter-1].body << endl;
+    cout << "Date: " << head->entries[counter-1].date << endl;
     --counter;
     display_private(head);
 
@@ -171,9 +231,19 @@ int stack::push(stackNode * & head, email & userData){
   { 
     head = new stackNode;
     head->entries = new email[MAX];
-    cout << MAX << " & " << counter << endl;
+
     head->entries[counter].user = new char[strlen(userData.user)+1];
     strcpy(head->entries[counter].user, userData.user);
+
+    head->entries[counter].topic = new char[strlen(userData.topic)+1];
+    strcpy(head->entries[counter].topic, userData.topic);
+
+    head->entries[counter].body = new char[strlen(userData.body)+1];
+    strcpy(head->entries[counter].body, userData.body);
+
+    head->entries[counter].date = new char[strlen(userData.date)+1];
+    strcpy(head->entries[counter].date, userData.date);
+
     cout << "test " << head->entries[counter].user << endl;
     ++counter;
     head->next = NULL;
@@ -183,6 +253,16 @@ int stack::push(stackNode * & head, email & userData){
     cout << " in the middle " << endl;
     head->entries[counter].user = new char[strlen(userData.user)+1];
     strcpy(head->entries[counter].user, userData.user);
+
+    head->entries[counter].topic = new char[strlen(userData.topic)+1];
+    strcpy(head->entries[counter].topic, userData.topic);
+
+    head->entries[counter].body = new char[strlen(userData.body)+1];
+    strcpy(head->entries[counter].body, userData.body);
+
+    head->entries[counter].date = new char[strlen(userData.date)+1];
+    strcpy(head->entries[counter].date, userData.date);
+
     cout << "test " << head->entries[counter].user << endl;
     ++counter;
 
@@ -192,7 +272,16 @@ int stack::push(stackNode * & head, email & userData){
 
     head->entries[counter].user = new char[strlen(userData.user)+1];
     strcpy(head->entries[counter].user, userData.user);
-    cout << "test " << head->entries[counter].user << endl;
+
+    head->entries[counter].topic = new char[strlen(userData.topic)+1];
+    strcpy(head->entries[counter].topic, userData.topic);
+
+    head->entries[counter].body = new char[strlen(userData.body)+1];
+    strcpy(head->entries[counter].body, userData.body);
+
+    head->entries[counter].date = new char[strlen(userData.date)+1];
+    strcpy(head->entries[counter].date, userData.date);
+
 
     cout << " at end of array " << endl;
     stackNode * temp;
@@ -211,5 +300,8 @@ int stack::push(stackNode * & head, email & userData){
 // destructor for stack
 stack::~stack(){
 
+
+}
+queueList::~queueList(){
 
 }

@@ -39,18 +39,24 @@ class stack{
     stack();
     //wrapper functions
     int pushInfo(email & userData); 
-    char * peek();
     int display();
     int deletePop();
+
+    email peek();
+
+    bool empty();
 
     ~stack();
     
 
   private:
-    char* peek_aboo(stackNode * head); // peeks and returns top of stack
+    email peek_aboo(stackNode * head); // peeks and returns top of stack
+
     int display_private(stackNode * head); // displays list of arrays of emails
     int push(stackNode * & head, email & userData); // puts email into array 
     int pop(stackNode * & head); // deletes top of stack
+
+    bool is_empty(stackNode * head);// checks if list is full
 
     stackNode * head;
    
