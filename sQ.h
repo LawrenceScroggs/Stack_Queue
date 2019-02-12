@@ -12,13 +12,17 @@ int const MAX = 5;
 
 struct email{
 
-  
+
+  email();
+
   char * user;
   char * topic;
   char * body;
   char * date;
 
   email * next;
+
+  ~email();
 
 
 };
@@ -41,22 +45,24 @@ class stack{
     int pushInfo(email & userData); 
     int display();
     int deletePop();
+    int peek();
 
-    email peek();
+    email get();
 
-    bool empty();
+    bool empty(email & head);
 
     ~stack();
     
 
   private:
-    email peek_aboo(stackNode * head); // peeks and returns top of stack
+    email getter(stackNode * head); // peeks and returns top of stack
 
+    int peek_aboo(stackNode * head); // peeks and returns top of stack info
     int display_private(stackNode * head); // displays list of arrays of emails
     int push(stackNode * & head, email & userData); // puts email into array 
     int pop(stackNode * & head); // deletes top of stack
 
-    bool is_empty(stackNode * head);// checks if list is full
+    bool is_empty(email & temp);// checks if list is full
 
     stackNode * head;
    
@@ -69,11 +75,20 @@ class queueList{
   public:
     queueList();
     ~queueList();
+
+    //wrapper functions
     int enqueue(email & userData);
+    int displayQ();
+    int peekQ();
+    int dequeue();
 
   private:
-    int buildQ(email *& qHead, email & userData);
-    email * qHead;
+    int dequeue_private(email *& rear); // grabs last input and deletes
+    int peekQ_private(email * rear); //grabs rear of list and displays
+    int buildQ(email *& qHead, email & userData); // builds CLL
+    int displayQ_private(email * current, email * rear); // displays CLL
+
+    email * rear;
 
 
 };

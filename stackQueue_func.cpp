@@ -1,9 +1,20 @@
 // This will implement all the functions of my class
 
 # include "sQ.h"
+
+
+email::email(){
+
+  user = NULL;
+  topic = NULL;
+  body = NULL;
+  date = NULL;
+
+  next = NULL;
+}
 queueList::queueList(){
 
-  qHead = NULL;
+  rear = NULL;
 
 }
 stack::stack(){
@@ -30,36 +41,114 @@ stackNode::stackNode(){
 
 
 }
+// wrapper for peekQ_private
+int queueList::peekQ(){
+
+  int check = 0;
+
+  check = peekQ_private(rear);
+
+  if(check == 1)
+    return 0;
+
+  else
+  {
+    cout << "List is empty" << endl;
+    return -1;
+  }
+
+}
+// checks for rear of list and displays
+int queueList::peekQ_private(email * rear){
+
+  if(!rear) return -1;
+
+  else
+  {
+    cout << "Email Username: " << rear->next->user << endl;
+    return 1;
+  }
+}
+// wrapper for displayQ_private()
+int queueList::displayQ(){
+
+  int temp = 0;
+
+  email * current = rear->next; // holds the beginning of list
+
+  temp = displayQ_private(current,rear);
+
+  if(temp == -1)
+  {
+    cout << "List is Empty nothing to Display" << endl;
+    return -1;
+  }
+  else
+    return 1;
+
+}
+int queueList::displayQ_private(email * current,email * rear){
+
+  if(!rear)
+    return -1;
+  else if(current == rear) // it is at beginning of list
+  {
+    cout << "tetst 1" << endl;
+    cout << "Email Username: " << current->user << endl;
+    return 1;
+  }
+  else if(current != rear)
+  {
+    cout << "test 2" << endl;
+    cout << "Email Username: " << current->user << endl;
+    displayQ_private(current->next,rear);
+  }
+
+
+}
 // wrapper for buildQ
 int queueList::enqueue(email & userData){
 
-  //buildQ(qHead,userData);
+  buildQ(rear,userData);
 
   return 0;
 
 }
-// wrapper for is_empty
-bool stack::empty(){
+// builds CLL from previous data
+int queueList::buildQ(email *& rear, email & userData){
 
-  bool temp = false;
+  if(!rear)
+  {
+    cout << "build 1" << endl;
+    cout << "user data: " << userData.user << endl;
+    rear = new email;
+    rear->user = new char[strlen(userData.user)+1];
+    strcpy(rear->user,userData.user);
+    cout << "list data: " << rear->user << endl;
+    rear->next = rear;
 
-  temp = is_empty(head);
-
-  if(temp == true)
-    return true;
-
+    return 2;
+  }
   else
-    return false;
+  {
+    cout << "build 2" << endl;
+    cout << "user data: " << userData.user << endl;
+    email * hold = rear->next;
+    rear->next = new email;
+    rear->next->user = new char[strlen(userData.user)+1];
+    strcpy(rear->next->user, userData.user);
+    cout << "list data: " << rear->next->user << endl;
+    
 
-}
-// checks if list is empty
-bool stack::is_empty(stackNode * head){
+    rear = rear->next;
+    rear->next = hold;
+  
 
-  if(!head)
-    return true;
+    return 1;
 
-  else
-    return false;
+  }
+
+
 }
 // wrapper for pop function
 int stack::deletePop(){
@@ -82,13 +171,13 @@ int stack::pop(stackNode *& head){
   {
     return -1;
   }
+  if(top == 0 && !head->next)
+  {
+    cout << "in here now";
+    return -1;
+  }
   else if(top == 0)
   {
-    if(!head->next)
-    {
-      head = NULL;
-      return -1;
-    }
     stackNode * hold = head->next;
     head->next->entries[top + 4].user = NULL;
     head->next->entries[top + 4].body = NULL;
@@ -98,10 +187,17 @@ int stack::pop(stackNode *& head){
     head = hold;
     if(head)
     {
+      cout << "test 1" << endl;
       top = MAX-1;
       counter = MAX;
+      return 1;
     }
-    return 1;
+    else
+    {
+      cout << "test 2" << endl;
+      head = NULL;
+      return -1;
+    }
   }
   else if(top < MAX)
   {
@@ -116,22 +212,18 @@ int stack::pop(stackNode *& head){
 
 
 }
-// wrapper function for peek
-email stack::peek(){
+// wrapper function for getter
+email stack::get(){
 
 
   email temp;
 
-  temp = peek_aboo(head);
+  temp = getter(head);
 
-  return temp;
-
-
-
-  
+  return temp; 
 }
-// finds the top of stack displays for client
-email stack::peek_aboo(stackNode * headPeek){
+// gets the top of stack displays for client
+email stack::getter(stackNode * headPeek){
 
 
   if(!head)
@@ -141,12 +233,68 @@ email stack::peek_aboo(stackNode * headPeek){
   }
   if(top == 0)
   {
+/*    cout << "Email Username: " << head->next->entries[top+4].user << endl;
+    cout << "Topic: " << head->next->entries[top+4].topic << endl;
+    cout << "Body: " << head->next->entries[top+4].body << endl;
+    cout << "Date: " << head->next->entries[top+4].date << endl;
+*/
+    counter = MAX;
+
+    return head->next->entries[top+4];
+  }
+  else if(top < MAX)
+  {
+/*    cout << "Email Username: " << head->entries[top-1].user << endl;
+    cout << "Topic: " << head->entries[top-1].topic << endl;
+    cout << "Body: " << head->entries[top-1].body << endl;
+    cout << "Date: " << head->entries[top-1].date << endl;
+*/
+    counter = top;
+    cout << counter << endl;
+    
+
+    return head->entries[top-1];
+
+  }
+
+
+}
+int stack::peek(){
+
+  int check = 0;
+
+  check = peek_aboo(head);
+
+  if(check == 1)
+    return 1;
+
+  else return -1;
+
+}
+int stack::peek_aboo(stackNode * headPeek){
+
+
+  if(!head)
+  {
+    cout << "List is empty. " << endl;
+    return -1;
+    
+  }
+  if(top == 0)
+  {
+    if(!head->next)
+    {
+      cout << "in here bro" << endl;
+      return -1;
+    }
     cout << "Email Username: " << head->next->entries[top+4].user << endl;
     cout << "Topic: " << head->next->entries[top+4].topic << endl;
     cout << "Body: " << head->next->entries[top+4].body << endl;
     cout << "Date: " << head->next->entries[top+4].date << endl;
 
-    return head->next->entries[top+4];
+    counter = MAX;
+
+    return 1;
   }
   else if(top < MAX)
   {
@@ -155,10 +303,13 @@ email stack::peek_aboo(stackNode * headPeek){
     cout << "Body: " << head->entries[top-1].body << endl;
     cout << "Date: " << head->entries[top-1].date << endl;
 
-    return head->entries[top-1];
+    counter = top;
+    cout << counter << endl;
+    
+
+    return 1;
 
   }
-
 
 }
 // wrapper function for display_private
@@ -170,7 +321,7 @@ int stack::display(){
 
   if(dispCheck == -1)
   {
-    cout << "Emails Empty" << endl;
+    counter = top;
     return -1;
   }
 
@@ -303,5 +454,8 @@ stack::~stack(){
 
 }
 queueList::~queueList(){
+
+}
+email::~email(){
 
 }
